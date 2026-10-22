@@ -1,0 +1,18 @@
+name: Cash-advance ML verification
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests
+        run: python -m unittest -v
+      - name: Run synthetic evaluation and ledger demo
+        run: python advance_lab.py --output demo-output
